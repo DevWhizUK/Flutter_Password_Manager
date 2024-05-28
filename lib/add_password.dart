@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'settings.dart';
-import 'home.dart';
+import 'password_generator.dart';
 
 class AddPasswordPage extends StatefulWidget {
   final int userId;
@@ -60,6 +60,17 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
     });
   }
 
+  void _navigateToPasswordGenerator() async {
+    final generatedPassword = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PasswordGeneratorPage()),
+    );
+
+    if (generatedPassword != null && generatedPassword is String) {
+      _passwordController.text = generatedPassword;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,15 +114,24 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
               decoration: InputDecoration(
                 labelText: 'Password',
                 prefixIcon: Icon(Icons.lock),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscureText ? Icons.visibility : Icons.visibility_off,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _obscureText = !_obscureText;
-                    });
-                  },
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.refresh),
+                      onPressed: _navigateToPasswordGenerator,
+                    ),
+                  ],
                 ),
               ),
             ),
