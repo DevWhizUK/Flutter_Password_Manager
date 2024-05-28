@@ -14,6 +14,7 @@ class PasswordDetailsPage extends StatefulWidget {
 
 class _PasswordDetailsPageState extends State<PasswordDetailsPage> {
   bool _isLoading = true;
+  bool _obscureText = true;
   Map<String, dynamic> _passwordDetails = {};
   String _message = '';
 
@@ -75,13 +76,59 @@ class _PasswordDetailsPageState extends State<PasswordDetailsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Name: ${_passwordDetails['Name']}', style: Theme.of(context).textTheme.headline6),
+                  Text(
+                    'Name:',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text(
+                    _passwordDetails['Name'] ?? '',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                   SizedBox(height: 10),
-                  Text('Username: ${_passwordDetails['Username']}', style: Theme.of(context).textTheme.bodyText1),
+                  Text(
+                    'Username:',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text(
+                    _passwordDetails['Username'] ?? '',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                   SizedBox(height: 10),
-                  Text('Password: ${_passwordDetails['Password']}', style: Theme.of(context).textTheme.bodyText1),
+                  Text(
+                    'Password:',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _obscureText
+                              ? '•' * (_passwordDetails['Password']?.length ?? 0)
+                              : _passwordDetails['Password'] ?? '',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          _obscureText ? Icons.visibility : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 10),
-                  Text('URL: ${_passwordDetails['URL']}', style: Theme.of(context).textTheme.bodyText1),
+                  Text(
+                    'URL:',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text(
+                    _passwordDetails['URL'] ?? '',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
