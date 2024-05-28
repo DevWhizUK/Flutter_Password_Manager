@@ -23,6 +23,32 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
   bool _obscureText = true;
   String _message = '';
   String _selectedOption = 'Password';
+  int? _selectedFolder;
+  List<dynamic> _folders = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchFolders();
+  }
+
+  Future<void> _fetchFolders() async {
+    final response = await http.post(
+      Uri.parse('http://taylorv24.sg-host.com/get_folders.php'),
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+      body: jsonEncode({'userId': widget.userId}),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _folders = json.decode(response.body);
+      });
+    } else {
+      setState(() {
+        _folders = [];
+      });
+    }
+  }
 
   Future<void> _addPassword() async {
     setState(() {
@@ -40,6 +66,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
         'username': _usernameController.text,
         'password': _passwordController.text,
         'url': _urlController.text,
+        'folderId': _selectedFolder
       }),
     );
 
@@ -196,6 +223,22 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                   labelText: 'URL',
                   prefixIcon: Icon(Icons.link),
                 ),
+              ),
+              SizedBox(height: 20),
+              DropdownButton<int>(
+                value: _selectedFolder,
+                hint: Text('Select Folder'),
+                onChanged: (int? newValue) {
+                  setState(() {
+                    _selectedFolder = newValue;
+                  });
+                },
+                items: _folders.map<DropdownMenuItem<int>>((dynamic folder) {
+                  return DropdownMenuItem<int>(
+                    value: folder['FolderID'],
+                    child: Text(folder['FolderName']),
+                  );
+                }).toList(),
               ),
               SizedBox(height: 20),
               _isLoading
