@@ -39,7 +39,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    var settings = Provider.of<SettingsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Sign Up'),
@@ -66,10 +65,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 labelText: 'Username',
                 prefixIcon: Icon(Icons.person),
               ),
-              style: TextStyle(
-                fontSize: settings.fontSize,
-                fontFamily: settings.fontFamily,
-              ),
             ),
             SizedBox(height: 20),
             TextField(
@@ -79,10 +74,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 labelText: 'Password',
                 prefixIcon: Icon(Icons.lock),
               ),
-              style: TextStyle(
-                fontSize: settings.fontSize,
-                fontFamily: settings.fontFamily,
-              ),
             ),
             SizedBox(height: 20),
             TextField(
@@ -91,10 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
               decoration: InputDecoration(
                 labelText: 'Confirm Password',
                 prefixIcon: Icon(Icons.lock),
-              ),
-              style: TextStyle(
-                fontSize: settings.fontSize,
-                fontFamily: settings.fontFamily,
               ),
             ),
             SizedBox(height: 20),

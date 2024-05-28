@@ -21,10 +21,19 @@ class MyApp extends StatelessWidget {
               primaryColor: Colors.blue,
               hintColor: Colors.blueAccent,
               textTheme: TextTheme(
-                bodyText2: TextStyle(
-                  fontSize: settings.fontSize,
-                  fontFamily: settings.fontFamily,
-                ),
+                headline1: TextStyle(fontSize: settings.fontSize * 2, fontFamily: settings.fontFamily),
+                headline2: TextStyle(fontSize: settings.fontSize * 1.5, fontFamily: settings.fontFamily),
+                headline3: TextStyle(fontSize: settings.fontSize * 1.25, fontFamily: settings.fontFamily),
+                headline4: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                headline5: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                headline6: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                subtitle1: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                subtitle2: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                bodyText1: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                bodyText2: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                button: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                caption: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
+                overline: TextStyle(fontSize: settings.fontSize, fontFamily: settings.fontFamily),
               ),
             ),
             home: LoginPage(),
@@ -34,5 +43,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

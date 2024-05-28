@@ -55,7 +55,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    var settings = Provider.of<SettingsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('SecuroScanner'),
@@ -82,10 +81,6 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Username',
                 prefixIcon: Icon(Icons.person),
               ),
-              style: TextStyle(
-                fontSize: settings.fontSize,
-                fontFamily: settings.fontFamily,
-              ),
             ),
             SizedBox(height: 20),
             TextField(
@@ -104,10 +99,6 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   },
                 ),
-              ),
-              style: TextStyle(
-                fontSize: settings.fontSize,
-                fontFamily: settings.fontFamily,
               ),
             ),
             SizedBox(height: 20),
@@ -138,3 +129,4 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
