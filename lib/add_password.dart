@@ -111,7 +111,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
         _message = data['message'];
       });
       if (data['message'] == 'Folder added successfully') {
-        _fetchFolders(); // Refresh folders list after adding a new folder
+        Navigator.pop(context, true); // Return true to indicate success
       }
     } else {
       setState(() {
