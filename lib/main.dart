@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'login.dart';
 import 'settings_provider.dart';
+import 'home.dart';
 
 void main() {
   runApp(MyApp());

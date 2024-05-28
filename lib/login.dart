@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'signup.dart';
 import 'settings.dart';
 import 'settings_provider.dart';
+import 'home.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -39,7 +40,10 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _message = data['message'];
         if (data['message'] == 'Login successful') {
-          // Navigate to the home screen or another page
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(userId: data['userID'])),
+          );
         }
       });
     } else {
@@ -55,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var settings = Provider.of<SettingsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('SecuroScanner'),
@@ -81,6 +86,10 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Username',
                 prefixIcon: Icon(Icons.person),
               ),
+              style: TextStyle(
+                fontSize: settings.fontSize,
+                fontFamily: settings.fontFamily,
+              ),
             ),
             SizedBox(height: 20),
             TextField(
@@ -99,6 +108,10 @@ class _LoginPageState extends State<LoginPage> {
                     });
                   },
                 ),
+              ),
+              style: TextStyle(
+                fontSize: settings.fontSize,
+                fontFamily: settings.fontFamily,
               ),
             ),
             SizedBox(height: 20),
