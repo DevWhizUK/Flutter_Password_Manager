@@ -10,6 +10,8 @@ class PasswordGeneratorPage extends StatefulWidget {
 class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
   final TextEditingController _passwordController = TextEditingController();
   double _length = 12;
+  double _numNumbers = 2;
+  double _numSymbols = 2;
   bool _includeUppercase = true;
   bool _includeLowercase = true;
   bool _includeNumbers = true;
@@ -23,6 +25,8 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
 
   void _generatePassword() {
     final length = _length.round();
+    final numNumbers = _numNumbers.round();
+    final numSymbols = _numSymbols.round();
     const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
     const numbers = '0123456789';
@@ -31,18 +35,32 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
     String chars = '';
     if (_includeUppercase) chars += uppercaseLetters;
     if (_includeLowercase) chars += lowercaseLetters;
-    if (_includeNumbers) chars += numbers;
-    if (_includeSymbols) chars += symbols;
 
-    if (chars.isEmpty) {
+    String password = '';
+
+    final rand = Random();
+
+    if (_includeNumbers) {
+      password += List.generate(numNumbers, (index) => numbers[rand.nextInt(numbers.length)]).join();
+    }
+
+    if (_includeSymbols) {
+      password += List.generate(numSymbols, (index) => symbols[rand.nextInt(symbols.length)]).join();
+    }
+
+    final remainingLength = length - password.length;
+
+    if (chars.isEmpty && remainingLength > 0) {
       setState(() {
         _passwordController.text = '';
       });
       return;
     }
 
-    final rand = Random();
-    final password = List.generate(length, (index) => chars[rand.nextInt(chars.length)]).join();
+    password += List.generate(remainingLength, (index) => chars[rand.nextInt(chars.length)]).join();
+
+    // Shuffle the password to mix numbers and symbols
+    password = String.fromCharCodes(password.runes.toList()..shuffle(rand));
 
     setState(() {
       _passwordController.text = password;
@@ -100,6 +118,42 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                 ),
               ],
             ),
+            Row(
+              children: [
+                Text('Numbers: ${_numNumbers.round()}'),
+                Expanded(
+                  child: Slider(
+                    min: 0,
+                    max: _length,
+                    divisions: _length.round(),
+                    value: _numNumbers,
+                    onChanged: (value) {
+                      setState(() {
+                        _numNumbers = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text('Symbols: ${_numSymbols.round()}'),
+                Expanded(
+                  child: Slider(
+                    min: 0,
+                    max: _length,
+                    divisions: _length.round(),
+                    value: _numSymbols,
+                    onChanged: (value) {
+                      setState(() {
+                        _numSymbols = value;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
             CheckboxListTile(
               title: Text('Include Uppercase Letters'),
               value: _includeUppercase,
@@ -115,24 +169,6 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
               onChanged: (value) {
                 setState(() {
                   _includeLowercase = value!;
-                });
-              },
-            ),
-            CheckboxListTile(
-              title: Text('Include Numbers'),
-              value: _includeNumbers,
-              onChanged: (value) {
-                setState(() {
-                  _includeNumbers = value!;
-                });
-              },
-            ),
-            CheckboxListTile(
-              title: Text('Include Symbols'),
-              value: _includeSymbols,
-              onChanged: (value) {
-                setState(() {
-                  _includeSymbols = value!;
                 });
               },
             ),
