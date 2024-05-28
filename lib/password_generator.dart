@@ -140,7 +140,7 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                     value: _numNumbers,
                     onChanged: (value) {
                       setState(() {
-                        _numNumbers = value;
+                        _numNumbers = min(value, _length - _numSymbols);
                         _generatePassword();
                       });
                     },
@@ -159,7 +159,7 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                     value: _numSymbols,
                     onChanged: (value) {
                       setState(() {
-                        _numSymbols = value;
+                        _numSymbols = min(value, _length - _numNumbers);
                         _generatePassword();
                       });
                     },
@@ -198,5 +198,3 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
     );
   }
 }
-
-
