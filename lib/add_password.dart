@@ -95,7 +95,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
     });
 
     final response = await http.post(
-      Uri.parse('http://taylorv24.sg-host.com/add_folder.php'),
+      Uri.parse('http://taylorv24.sg-host.com/add_folder.php'), // Replace with actual endpoint
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -111,7 +111,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
         _message = data['message'];
       });
       if (data['message'] == 'Folder added successfully') {
-        Navigator.pop(context, true); // Return true to indicate success
+        Navigator.pop(context, true); // Return to the home page after adding a folder
       }
     } else {
       setState(() {
@@ -137,6 +137,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Add ${_selectedOption}'),
@@ -178,6 +179,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                 decoration: InputDecoration(
                   labelText: 'Name',
                   prefixIcon: Icon(Icons.label),
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 20),
@@ -186,6 +188,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                 decoration: InputDecoration(
                   labelText: 'Username',
                   prefixIcon: Icon(Icons.person),
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 20),
@@ -195,6 +198,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                 decoration: InputDecoration(
                   labelText: 'Password',
                   prefixIcon: Icon(Icons.lock),
+                  border: OutlineInputBorder(),
                   suffixIcon: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -222,6 +226,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                 decoration: InputDecoration(
                   labelText: 'URL',
                   prefixIcon: Icon(Icons.link),
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 20),
@@ -246,6 +251,9 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                   : ElevatedButton(
                       onPressed: _addPassword,
                       child: Text('Save Password'),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      ),
                     ),
             ] else if (_selectedOption == 'Folder') ...[
               TextField(
@@ -253,6 +261,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                 decoration: InputDecoration(
                   labelText: 'Folder Name',
                   prefixIcon: Icon(Icons.folder),
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 20),
@@ -261,12 +270,15 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                   : ElevatedButton(
                       onPressed: _addFolder,
                       child: Text('Save Folder'),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      ),
                     ),
             ],
             SizedBox(height: 20),
             Text(
               _message,
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: theme.errorColor),
             ),
           ],
         ),

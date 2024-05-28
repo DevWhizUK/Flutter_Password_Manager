@@ -46,6 +46,7 @@ class _FolderPageState extends State<FolderPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.folderName),
@@ -71,7 +72,7 @@ class _FolderPageState extends State<FolderPage> {
     if (_passwords.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Text('No passwords available in this folder.'),
+        child: Text('No passwords available in this folder.', style: Theme.of(context).textTheme.bodyText1),
       );
     }
     return ListView.builder(
@@ -79,8 +80,8 @@ class _FolderPageState extends State<FolderPage> {
       itemBuilder: (context, index) {
         final password = _passwords[index];
         return ListTile(
-          title: Text(password['Name']),
-          subtitle: Text(password['Username']),
+          title: Text(password['Name'], style: Theme.of(context).textTheme.bodyText1),
+          subtitle: Text(password['Username'], style: Theme.of(context).textTheme.bodyText2),
           onTap: () {
             Navigator.push(
               context,

@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('SecuroScanner'),
@@ -146,12 +147,12 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildFolders() {
     if (_folders.isEmpty) {
-      return Text('No folders available.');
+      return Text('No folders available.', style: Theme.of(context).textTheme.bodyText1);
     }
     return Column(
       children: _folders.map((folder) {
         return ListTile(
-          title: Text(folder['FolderName']),
+          title: Text(folder['FolderName'], style: Theme.of(context).textTheme.bodyText1),
           onTap: () {
             Navigator.push(
               context,
@@ -167,13 +168,13 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildRecentPasswords() {
     if (_recentPasswords.isEmpty) {
-      return Text('No recent passwords available.');
+      return Text('No recent passwords available.', style: Theme.of(context).textTheme.bodyText1);
     }
     return Column(
       children: _recentPasswords.map((password) {
         return ListTile(
-          title: Text(password['Name']),
-          subtitle: Text(password['Username']),
+          title: Text(password['Name'], style: Theme.of(context).textTheme.bodyText1),
+          subtitle: Text(password['Username'], style: Theme.of(context).textTheme.bodyText2),
           onTap: () {
             Navigator.push(
               context,
