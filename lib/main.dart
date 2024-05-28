@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'login.dart';
+import 'settings_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,20 +10,29 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SecuroScanner',
-      theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.blue,
-        hintColor: Colors.blueAccent,
-        scaffoldBackgroundColor: Color(0xFF1A1A1A),
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          ),
-        ),
+    return ChangeNotifierProvider(
+      create: (context) => SettingsProvider(),
+      child: Consumer<SettingsProvider>(
+        builder: (context, settings, child) {
+          return MaterialApp(
+            title: 'SecuroScanner',
+            theme: ThemeData(
+              brightness: settings.isDarkTheme ? Brightness.dark : Brightness.light,
+              primaryColor: Colors.blue,
+              hintColor: Colors.blueAccent,
+              textTheme: TextTheme(
+                bodyText2: TextStyle(
+                  fontSize: settings.fontSize,
+                  fontFamily: settings.fontFamily,
+                ),
+              ),
+            ),
+            home: LoginPage(),
+          );
+        },
       ),
-      home: LoginPage(),
     );
   }
 }
+
 
