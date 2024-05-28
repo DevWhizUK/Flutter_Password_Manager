@@ -11,6 +11,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isLoading = false;
+  bool _obscureText = true;
   String _message = '';
 
   Future<void> _login() async {
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: Text('SecuroScanner'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -61,12 +62,29 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: InputDecoration(
+                labelText: 'Username',
+                prefixIcon: Icon(Icons.person),
+              ),
             ),
+            SizedBox(height: 20),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
+              obscureText: _obscureText,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: Icon(Icons.lock),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                ),
+              ),
             ),
             SizedBox(height: 20),
             _isLoading
@@ -76,10 +94,14 @@ class _LoginPageState extends State<LoginPage> {
                     child: Text('Login'),
                   ),
             SizedBox(height: 20),
-            Text(_message),
+            Text(
+              _message,
+              style: TextStyle(color: Colors.red),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
