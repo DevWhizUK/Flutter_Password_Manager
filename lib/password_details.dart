@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'settings.dart';
@@ -52,6 +53,13 @@ class _PasswordDetailsPageState extends State<PasswordDetailsPage> {
     // Implement edit password functionality
   }
 
+  void _copyToClipboard(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Copied to clipboard'),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,35 +84,41 @@ class _PasswordDetailsPageState extends State<PasswordDetailsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Name:',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  Text(
-                    _passwordDetails['Name'] ?? '',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Username:',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  Text(
-                    _passwordDetails['Username'] ?? '',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Password:',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          _obscureText
-                              ? '•' * (_passwordDetails['Password']?.length ?? 0)
-                              : _passwordDetails['Password'] ?? '',
+                          'Name: ${_passwordDetails['Name'] ?? ''}',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.copy),
+                        onPressed: () => _copyToClipboard(_passwordDetails['Name'] ?? ''),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Username: ${_passwordDetails['Username'] ?? ''}',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.copy),
+                        onPressed: () => _copyToClipboard(_passwordDetails['Username'] ?? ''),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Password: ${_obscureText ? '•' * (_passwordDetails['Password']?.length ?? 0) : _passwordDetails['Password'] ?? ''}',
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
@@ -118,16 +132,26 @@ class _PasswordDetailsPageState extends State<PasswordDetailsPage> {
                           });
                         },
                       ),
+                      IconButton(
+                        icon: Icon(Icons.copy),
+                        onPressed: () => _copyToClipboard(_passwordDetails['Password'] ?? ''),
+                      ),
                     ],
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    'URL:',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  Text(
-                    _passwordDetails['URL'] ?? '',
-                    style: Theme.of(context).textTheme.bodyText1,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'URL: ${_passwordDetails['URL'] ?? ''}',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.copy),
+                        onPressed: () => _copyToClipboard(_passwordDetails['URL'] ?? ''),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -155,3 +179,4 @@ class _PasswordDetailsPageState extends State<PasswordDetailsPage> {
     );
   }
 }
+
