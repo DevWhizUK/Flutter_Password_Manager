@@ -56,6 +56,10 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
     ));
   }
 
+  void _returnPassword() {
+    Navigator.pop(context, _passwordController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,7 +138,10 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _generatePassword,
+              onPressed: () {
+                _generatePassword();
+                _returnPassword();
+              },
               child: Text('Generate Password'),
             ),
           ],
@@ -143,3 +150,4 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
     );
   }
 }
+
