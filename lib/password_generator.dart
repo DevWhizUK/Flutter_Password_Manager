@@ -112,6 +112,10 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                     onChanged: (value) {
                       setState(() {
                         _length = value;
+                        if (_numNumbers + _numSymbols > _length) {
+                          _numNumbers = min(_numNumbers, _length);
+                          _numSymbols = min(_numSymbols, _length - _numNumbers);
+                        }
                       });
                     },
                   ),
@@ -124,8 +128,8 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                 Expanded(
                   child: Slider(
                     min: 0,
-                    max: _length,
-                    divisions: _length.round(),
+                    max: _length - _numSymbols,
+                    divisions: (_length - _numSymbols).round(),
                     value: _numNumbers,
                     onChanged: (value) {
                       setState(() {
@@ -142,8 +146,8 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                 Expanded(
                   child: Slider(
                     min: 0,
-                    max: _length,
-                    divisions: _length.round(),
+                    max: _length - _numNumbers,
+                    divisions: (_length - _numNumbers).round(),
                     value: _numSymbols,
                     onChanged: (value) {
                       setState(() {
