@@ -95,7 +95,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
     });
 
     final response = await http.post(
-      Uri.parse('http://taylorv24.sg-host.com/add_folder.php'), // Replace with actual endpoint
+      Uri.parse('http://taylorv24.sg-host.com/add_folder.php'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -111,7 +111,7 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
         _message = data['message'];
       });
       if (data['message'] == 'Folder added successfully') {
-        Navigator.pop(context, true); // Return true to indicate success
+        _fetchFolders(); // Refresh folders list after adding a new folder
       }
     } else {
       setState(() {
