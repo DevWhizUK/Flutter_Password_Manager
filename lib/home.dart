@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'settings.dart';
 import 'add_password.dart';
+import 'password_details.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
@@ -168,7 +169,10 @@ class _HomePageState extends State<HomePage> {
           title: Text(password['Name']),
           subtitle: Text(password['Username']),
           onTap: () {
-            // Handle password tap
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PasswordDetailsPage(passwordId: password['PasswordID'])),
+            );
           },
         );
       }).toList(),
