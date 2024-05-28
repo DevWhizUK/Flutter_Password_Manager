@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'settings.dart';
+import 'add_password.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
@@ -102,7 +103,10 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Handle add password profile action here
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddPasswordPage(userId: widget.userId)),
+          );
         },
         child: Icon(Icons.add),
       ),
@@ -162,3 +166,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
