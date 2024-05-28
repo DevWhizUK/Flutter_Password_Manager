@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
   static ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
+  static ValueNotifier<TextStyle> textStyleNotifier = ValueNotifier(TextStyle());
 
   @override
   _SettingsPageState createState() => _SettingsPageState();
@@ -9,6 +10,8 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   double _fontSize = 16.0;
+  String _selectedFont = 'Roboto';
+  final List<String> _fonts = ['Roboto', 'Arial', 'Times New Roman', 'Courier New', 'Verdana'];
 
   @override
   Widget build(BuildContext context) {
@@ -64,14 +67,31 @@ class _SettingsPageState extends State<SettingsPage> {
               value: _fontSize,
               min: 12.0,
               max: 24.0,
-              divisions: 6,
+              divisions: 12,
               label: _fontSize.round().toString(),
               onChanged: (double value) {
                 setState(() {
                   _fontSize = value;
-                  // You would normally update the text theme here
+                  SettingsPage.textStyleNotifier.value = TextStyle(fontSize: _fontSize, fontFamily: _selectedFont);
                 });
               },
+            ),
+            SizedBox(height: 20),
+            Text('Font Family'),
+            DropdownButton<String>(
+              value: _selectedFont,
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedFont = newValue!;
+                  SettingsPage.textStyleNotifier.value = TextStyle(fontSize: _fontSize, fontFamily: _selectedFont);
+                });
+              },
+              items: _fonts.map<DropdownMenuItem<String>>((String font) {
+                return DropdownMenuItem<String>(
+                  value: font,
+                  child: Text(font),
+                );
+              }).toList(),
             ),
           ],
         ),
