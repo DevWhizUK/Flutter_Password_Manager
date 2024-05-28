@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'settings.dart';
-import 'password_generator.dart';
+import 'home.dart';
 
 class AddPasswordPage extends StatefulWidget {
   final int userId;
@@ -46,6 +46,9 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
       setState(() {
         _message = data['message'];
       });
+      if (data['message'] == 'Password saved successfully') {
+        Navigator.pop(context, true); // Return true to indicate success
+      }
     } else {
       setState(() {
         _message = 'Error: ${response.statusCode}';
@@ -127,16 +130,6 @@ class _AddPasswordPageState extends State<AddPasswordPage> {
                     onPressed: _addPassword,
                     child: Text('Save Password'),
                   ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PasswordGeneratorPage()),
-                );
-              },
-              child: Text('Generate Password'),
-            ),
             SizedBox(height: 20),
             Text(
               _message,

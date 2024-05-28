@@ -102,11 +102,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final result = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddPasswordPage(userId: widget.userId)),
           );
+          if (result == true) {
+            setState(() {
+              _isLoading = true;
+            });
+            _fetchData(); // Refresh data
+          }
         },
         child: Icon(Icons.add),
       ),
@@ -114,20 +120,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildContent() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Folders', style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 10),
-            _buildFolders(),
-            SizedBox(height: 20),
-            Text('Recent Passwords', style: Theme.of(context).textTheme.headline5),
-            SizedBox(height: 10),
-            _buildRecentPasswords(),
-          ],
+    return RefreshIndicator(
+      onRefresh: _fetchData,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Folders', style: Theme.of(context).textTheme.headline5),
+              SizedBox(height: 10),
+              _buildFolders(),
+              SizedBox(height: 20),
+              Text('Recent Passwords', style: Theme.of(context).textTheme.headline5),
+              SizedBox(height: 10),
+              _buildRecentPasswords(),
+            ],
+          ),
         ),
       ),
     );
@@ -166,4 +175,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
