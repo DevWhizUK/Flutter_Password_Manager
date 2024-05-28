@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'settings.dart';
 import 'add_password.dart';
 import 'password_details.dart';
+import 'folder_page.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
@@ -152,7 +153,12 @@ class _HomePageState extends State<HomePage> {
         return ListTile(
           title: Text(folder['FolderName']),
           onTap: () {
-            // Handle folder tap
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FolderPage(folderId: folder['FolderID'], folderName: folder['FolderName']),
+              ),
+            );
           },
         );
       }).toList(),
