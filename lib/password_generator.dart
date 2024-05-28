@@ -18,6 +18,12 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
   bool _includeSymbols = true;
 
   @override
+  void initState() {
+    super.initState();
+    _generatePassword();
+  }
+
+  @override
   void dispose() {
     _passwordController.dispose();
     super.dispose();
@@ -116,6 +122,7 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                           _numNumbers = min(_numNumbers, _length);
                           _numSymbols = min(_numSymbols, _length - _numNumbers);
                         }
+                        _generatePassword();
                       });
                     },
                   ),
@@ -134,6 +141,7 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                     onChanged: (value) {
                       setState(() {
                         _numNumbers = value;
+                        _generatePassword();
                       });
                     },
                   ),
@@ -152,6 +160,7 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
                     onChanged: (value) {
                       setState(() {
                         _numSymbols = value;
+                        _generatePassword();
                       });
                     },
                   ),
@@ -164,6 +173,7 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
               onChanged: (value) {
                 setState(() {
                   _includeUppercase = value!;
+                  _generatePassword();
                 });
               },
             ),
@@ -173,16 +183,14 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
               onChanged: (value) {
                 setState(() {
                   _includeLowercase = value!;
+                  _generatePassword();
                 });
               },
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                _generatePassword();
-                _returnPassword();
-              },
-              child: Text('Generate Password'),
+              onPressed: _returnPassword,
+              child: Text('Use Generated Password'),
             ),
           ],
         ),
@@ -190,4 +198,5 @@ class _PasswordGeneratorPageState extends State<PasswordGeneratorPage> {
     );
   }
 }
+
 
