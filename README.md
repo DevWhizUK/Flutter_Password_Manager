@@ -81,6 +81,4 @@ SecuroScanner is a mobile password manager application built with Flutter. This 
     flutter run
     ```
 
-### Folder Structure
-
 
